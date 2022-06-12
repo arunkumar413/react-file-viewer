@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './style.css';
+import uuid from 'react-uuid'
 
 import { FolderIcon, DeleteIcon, EditIcon, FilledFolder, FolderNormalIcon } from './icons';
 
 export default function App() {
-  const [showIcons, setShowIcons] = useState('inline')
   const tree = {
     path: 'photos',
     name: 'photos',
@@ -71,30 +71,34 @@ export default function App() {
   var depth = 0;
 
 
-  function hideIcons(e) {
-
-    // setShowIcons('none')
 
 
-  }
+  function handleShowIcons(evt, id) {
 
-  function handleShowIcons(e) {
 
-    // setShowIcons('inline')
+    console.log(id)
+
 
   }
 
 
 
 
-  function buildTree(node, level = 0) {
+  function buildTree(node, level = 1) {
     if (node.type === "directory") {
+
       const children = node.children.map((x) => buildTree(x, level + 1));
+      let id = uuid();
+
       return (
-        <div id={level} key={node.name} onMouseEnter={handleShowIcons} onMouseLeave={hideIcons} style={{ paddingLeft: level * 5 }} className='dir'>
+        <div id={id} key={id}
+          onMouseEnter={(evt) => handleShowIcons(evt, id)}
+          // onMouseLeave={(evt) => hideIcons(evt, id)}
+          style={{ paddingLeft: level * 5 }}
+          className='dir'>
           <FolderNormalIcon />
           {node.name}
-          <span style={{ display: showIcons }} >
+          <span>
             <FolderIcon />
             <EditIcon />
             <DeleteIcon />
@@ -103,7 +107,7 @@ export default function App() {
         </div>
       );
     } else if (node.type === "file") {
-      return <div key={node.name} style={{ paddingLeft: level * 10 }} className='file'>{node.name}</div>;
+      return <div key={uuid()} style={{ paddingLeft: level * 10 }} className='file'>{node.name}</div>;
     }
   }
 
