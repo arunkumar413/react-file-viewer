@@ -5,6 +5,10 @@ body {
 .dir {
   font-size: 1.4rem;
   color: black;
+  margin-left: 5px;
+  padding: 5px;
+  
+
 }
 
 .file {

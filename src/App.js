@@ -69,35 +69,30 @@ export default function App() {
   var items = [];
   var depth = 0;
 
-  function buildTree(children) {
-    depth++;
-    children.forEach(function (item, index) {
-      if (item.type === 'directory') {
-        items.push(
-          <div key={index.toString()} style={{ paddingLeft: depth * 10 }}>
-            <span className="dir">
-              {' '}
-              <FilledFolder /> {item.name} <FolderIcon /> <DeleteIcon />{' '}
-              <EditIcon />
-            </span>
-          </div>
-        );
-        buildTree(item.children);
-      } else if (item.type === 'file') {
-        items.push(
-          <div key={index.toString()} style={{ paddingLeft: depth * 15 }}>
-            {' '}
-            <span className="file">{item.name}</span>
-          </div>
-        );
-      }
-    });
+
+
+
+
+  function buildTree(node, level = 0) {
+    if (node.type === "directory") {
+      const children = node.children.map((x) => buildTree(x, level + 1));
+      return (
+        <div style={{ paddingLeft: level * 5 }} className='dir'>
+          {node.name} <div>{children}</div>
+        </div>
+      );
+    } else if (node.type === "file") {
+      return <div style={{ paddingLeft: level * 10 }} className='file'>{node.name}</div>;
+    }
   }
+
+
 
   return (
     <div>
       {buildTree(tree.children)}
       {items}
+      {buildTree(tree)}
     </div>
   );
 }
