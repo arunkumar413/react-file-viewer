@@ -1,0 +1,13 @@
+body {
+  font-family: sans-serif;
+}
+
+.dir {
+  font-size: 1.4rem;
+  color: black;
+}
+
+.file {
+  font-size: 1rem;
+  color: gray;
+}
