@@ -8,9 +8,7 @@ body {
   margin-left: 5px;
   padding: 5px;
   line-height: 16px;
-
-
-
+  border-left: solid 0.5px gray;
 }
 
 
