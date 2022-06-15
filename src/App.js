@@ -99,41 +99,23 @@ export default function App() {
     console.log(id);
   }
 
-  function insertNodeIntoTree(node, nodeId, newNode, type) {
-    if (node.id == nodeId) {
-      if (newNode) {
-        newNode.id = uuid();
-        newNode.type = type;
-        newNode.children = [];
+  function insertNewNode(id, type) {
+    debugger;
+    function recursion(node) {
+      console.log(node.name, "--", node.id, "--", node.type);
+      if (node.id === id && node.type === "dir") {
+        var newNode = { id: uuid(), name: "test", type: type, children: [] };
+
         node.children.push(newNode);
       }
-    } else if (node.children != null) {
-      for (let i = 0; i < node.children.length; i++) {
-        insertNodeIntoTree(node.children[i], nodeId, newNode);
+      if (node.children) {
+        node.children.forEach(function (child) {
+          recursion(child);
+        });
       }
     }
-  }
 
-  function addNewNode(evt, tree, type, id) {
-    debugger;
-    Object.keys(tree).map(function (item, index) {
-      if (tree[item].id === id && type === "dir") {
-        console.log(id);
-        let newNode = {
-          type: type,
-          id: uuid(),
-          name: "new node",
-        };
-      } else if (tree[item].id === id && type === "file") {
-        tree[item].children.push({
-          type: type,
-          id: uuid(),
-          name: "new file",
-        });
-      } else {
-        addNewNode(tree[item].children);
-      }
-    });
+    recursion(tree);
   }
 
   function buildTree(node, level = 1) {
@@ -155,7 +137,8 @@ export default function App() {
           <span>
             {/* <FolderIcon onClick={addNewDir} /> */}
             <svg
-              onClick={(evt) => insertNodeIntoTree(evt)}
+              // onClick={(evt) => insertNodeIntoTree(tree, node.id, node.type)}
+              onClick={(evt) => insertNewNode(node.id, node.type)}
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
